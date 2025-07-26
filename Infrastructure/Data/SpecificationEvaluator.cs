@@ -20,6 +20,10 @@ public class SpecificationEvaluator<T> where T : BaseEntity
         {
             query = query.OrderByDescending(spec.OrderByDescending);
         }
+        if (spec.IsPagingEnabled)
+        {
+            query = query.Skip(spec.Skip).Take(spec.Take);
+        }
         return query;
     }
     public static IQueryable<TResult> GetQuery<TSpec, TResult>(IQueryable<T> query, ISpecification<T, TResult> spec)
